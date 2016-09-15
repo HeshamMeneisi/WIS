@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windows Input Simulator", "Windows Input Simulator\Windows Input Simulator.csproj", "{7D74E7E9-7AC6-4A9C-98C2-AEA7F25155EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalHook", "GlobalHook\GlobalHook.csproj", "{4FBD2658-8B68-4907-AC56-7509CB5925BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7D74E7E9-7AC6-4A9C-98C2-AEA7F25155EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D74E7E9-7AC6-4A9C-98C2-AEA7F25155EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D74E7E9-7AC6-4A9C-98C2-AEA7F25155EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D74E7E9-7AC6-4A9C-98C2-AEA7F25155EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FBD2658-8B68-4907-AC56-7509CB5925BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FBD2658-8B68-4907-AC56-7509CB5925BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FBD2658-8B68-4907-AC56-7509CB5925BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FBD2658-8B68-4907-AC56-7509CB5925BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
