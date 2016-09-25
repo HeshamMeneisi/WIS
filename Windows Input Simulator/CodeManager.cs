@@ -50,6 +50,24 @@ namespace Simulator
             {
                 throw new Exception("Interpretation Error --" + ex.Message);
             }
+            // RestoreMouse
+            try
+            {
+                MatchCollection mc = Regex.Matches(code, "RestoreMouse(.*?);");
+                if (mc.Count > 0)
+                {
+                    if (mc.Count == 1)
+                        set.RestoreMouse = true;
+                    else
+                        throw new Exception("Multiple RestoreMouse() signatures are NOT acceptable.");
+                }
+                else
+                    set.IgnoreKeyStats = true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Combiling Error --" + ex.Message);
+            }
             // Num, Caps, Scroll
             try
             {

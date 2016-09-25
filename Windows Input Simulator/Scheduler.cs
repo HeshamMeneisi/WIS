@@ -252,7 +252,7 @@ namespace Simulator
                 EventSet set = new EventSet();
                 FileManager.ReadFile(ref set, filename);
                 executer.LoadSet(set);
-                executer.StartExecuting(true, true, true, !set.IgnoreKeyStats, set.Multiplier, set.ShowDesktop);
+                executer.StartExecuting(true, true, true, !set.IgnoreKeyStats, set.Multiplier, set.ShowDesktop, set.RestoreMouse);
             }
         }
         // public Declarations

@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
+using Windows_Input_Simulator;
 
 namespace Simulator
 {
@@ -23,6 +24,7 @@ namespace Simulator
         bool lasteve = false;
         bool showdt = false;
         int multiplier;
+        Point imp;
         ExecuterSim subexecuter = null;
         SimStatus status = SimStatus.Idle;
         MicroLibrary.MicroTimer executer;
@@ -60,7 +62,10 @@ namespace Simulator
             XBUTTON2 = 0x00000002
         }
         // Event Handlers
-        public EventHandler Finished;
+        public delegate void ExeFinishedEventHandler(ExecuterSim sender, ExecuterFinishedEventArgs e);
+        public event ExeFinishedEventHandler Finished;
+        private bool rsm;
+
         // Imports
         [DllImport("user32.dll")]
         private static extern void keybd_event(int bVk, int bScan, KeyboardFlags dwFlags, UIntPtr dwExtraInfo);
@@ -76,7 +81,7 @@ namespace Simulator
             xdif = (double)Screen.PrimaryScreen.Bounds.Width / eveset.Resolution.Width;
             ydif = (double)Screen.PrimaryScreen.Bounds.Height / eveset.Resolution.Height;
         }
-        public void StartExecuting(bool exekebdevents, bool exembsevents, bool exemmevents, bool rsk, int mp, bool showdt)
+        public void StartExecuting(bool exekebdevents, bool exembsevents, bool exemmevents, bool rsk, int mp, bool showdt, bool restorem)
         {
             if (status == SimStatus.Idle)
             {
@@ -108,6 +113,8 @@ namespace Simulator
                 }
                 if (this.showdt = showdt)
                     DisplayControl.MinimizeAll();
+                rsm = restorem;
+                imp = Cursor.Position;
                 sync = new Synchronouser();
                 executer = new MicroLibrary.MicroTimer(1000000 / Windows_Input_Simulator.Properties.Settings.Default.evespersecond);
                 executer.MicroTimerElapsed += executer_elapsed;
@@ -117,16 +124,31 @@ namespace Simulator
         }
         public void StopExecuting()
         {
+            Halt(true);            
+        }
+
+        private void Halt(bool intr = false)
+        {
             if (status != SimStatus.Idle)
             {
                 status = SimStatus.Idle;
                 executer.Stop();
                 sync.StopSync();
                 if (subexecuter != null)
-                    subexecuter.StopExecuting();
-                Finished?.Invoke(this, EventArgs.Empty);
+                    subexecuter.Halt(intr);
+                OnFinished(intr);
             }
         }
+
+        private void OnFinished(bool intr)
+        {
+            if (showdt)
+                DisplayControl.RestoreAll();
+            if (rsm)
+                Cursor.Position = imp;
+            Finished?.Invoke(this, new ExecuterFinishedEventArgs(intr));
+        }
+
         public void Pause()
         {
             if (status == SimStatus.Running)
@@ -154,12 +176,12 @@ namespace Simulator
                 status = SimStatus.Running;
             }
         }
-        private void BasicPause()
+        private void Hold()
         {
             sync.Pause();
             executer.Stop();
         }
-        public void BasicResume()
+        public void Continue()
         {
             sync.Resume();
             executer.Start();
@@ -268,13 +290,13 @@ namespace Simulator
                 string filename = evetoexecute.Info.ToString();
                 if (File.Exists(filename))
                 {
-                    BasicPause();
+                    Hold();
                     EventSet es = new EventSet();
                     FileManager.ReadFile(ref es, filename);
                     subexecuter = new ExecuterSim();
                     subexecuter.LoadSet(es);
                     subexecuter.Finished += subexfinished;
-                    subexecuter.StartExecuting(keybd, mbs, mm, !es.IgnoreKeyStats, es.Multiplier, es.ShowDesktop);
+                    subexecuter.StartExecuting(keybd, mbs, mm, !es.IgnoreKeyStats, es.Multiplier, es.ShowDesktop, es.RestoreMouse);
                 }
             }
         }
@@ -282,10 +304,10 @@ namespace Simulator
         {
             if (lasteve)
             {
-                StopExecuting();
+                Halt();
             }
             else
-                BasicResume();
+                Continue();
         }
         public void ReleaseAllDownKeys()
         {
@@ -306,19 +328,25 @@ namespace Simulator
                 }
                 catch (Exception ex)
                 {
-                    Windows_Input_Simulator.Program.mainForm.AddLog(DateTime.Now, "Couldn't Execute Event " + eveset.GetEvents().ToList().IndexOf(eveset.CurrentEvent) + " --Executing Stopped.\n" + ex.Message);
-                    StopExecuting();
+                    // TODO: Should be through a logging event
+                    Program.mainForm.AddLog(DateTime.Now, "Couldn't Execute Event " + eveset.GetEvents().ToList().IndexOf(eveset.CurrentEvent) + " --Executing Stopped.\n" + ex.Message);
+                    Halt(true);
                 }
                 if (eveset.EndReached)
                 {
                     if (subexecuter == null || subexecuter.status == SimStatus.Idle)
-                        StopExecuting();
+                        Halt();
                     lasteve = true;
                 }
                 else
                     eveset.MoveToNextEvent();
                 sync.Cycle();
             }
+        }
+
+        public void StartExecuting(SOptions opt)
+        {
+            StartExecuting(opt.KeyboardActive, opt.MouseButtonsAactive, opt.MouseMovementActive, opt.RestoreMousePos, opt.Multiplier, opt.ShowDesktop, opt.RestoreMousePos);
         }
 
         // public Declarations
@@ -334,6 +362,24 @@ namespace Simulator
             get
             {
                 return sync;
+            }
+        }
+    }
+
+    internal class ExecuterFinishedEventArgs : EventArgs
+    {
+        private bool intr;
+
+        public ExecuterFinishedEventArgs(bool intr)
+        {
+            this.intr = intr;
+        }
+
+        public bool Interrupted
+        {
+            get
+            {
+                return intr;
             }
         }
     }

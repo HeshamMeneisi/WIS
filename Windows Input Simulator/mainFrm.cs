@@ -89,10 +89,6 @@ namespace Windows_Input_Simulator
                         FileManager.WriteToFile(recorder.GetEventSet(), saveFileDialog1.FileName);
                     }
                 }
-                if (rcdesktop.Checked)
-                {
-                    DisplayControl.RestoreAll();
-                }
             }
         }
         Log logForm = new Log();
@@ -154,30 +150,8 @@ namespace Windows_Input_Simulator
 
             HookManager.Init();
         }
-        //EventSet schedulerLoadedSet = null;
         private void sched_eve(object sender, EventRaisedEventArgs e)
         {
-            /*
-            if (File.Exists(e.RaisedEvent.FileName) && !executer.Status == ExecuterSim.SimStatus.Running)
-            {
-                try
-                {
-                    schedulerLoadedSet = CodeManager.CombineCode(codeTextBox.Text);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(this, ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                if (!executer.Status == ExecuterSim.SimStatus.Running)
-                {
-                    executer.LoadSet(schedulerLoadedSet);
-                    executer.StartExecuting(true, true, true, !schedulerLoadedSet.IgnoreKeyStats);
-                }
-                else
-                    MessageBox.Show(this, "Local executer is already running. There can be only one instance of the executer running at a time.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
-            }
-             */
         }
         private void hotkey_pressed(HotkeyPressedEventArgs e)
         {
@@ -204,12 +178,12 @@ namespace Windows_Input_Simulator
             }
         }
         public bool loop = false;
-        private void Executer_Finished(object sender, EventArgs e)
+        private void Executer_Finished(ExecuterSim sender, ExecuterFinishedEventArgs e)
         {
-            if (loop)
+            if (loop && !e.Interrupted)
             {
                 executer.LoadSet(loadedset);
-                executer.StartExecuting(exkebd.Checked, exmbs.Checked, exmm.Checked, rsk.Checked, mpCb.SelectedIndex + 1, exdesktop.Checked);
+                executer.StartExecuting(sopt);
             }
             else
             {
@@ -279,6 +253,7 @@ namespace Windows_Input_Simulator
         }
         bool resolutionChanged = false;
         Size dispResolution = Screen.PrimaryScreen.Bounds.Size;
+        SOptions sopt;
         private void startexbtn_Click(object sender, EventArgs e)
         {
             if(loadedset != null)
@@ -312,7 +287,7 @@ namespace Windows_Input_Simulator
                     expauseBtn.Enabled = true;
                     stopexbtn.Enabled = true;
                     exstatus.Text = "Executing!";
-                    executer.StartExecuting(exkebd.Checked, exmbs.Checked, exmm.Checked, rsk.Checked, mpCb.SelectedIndex + 1, exdesktop.Checked);
+                    executer.StartExecuting(sopt = new SOptions(exkebd.Checked, exmbs.Checked, exmm.Checked, rsk.Checked, mpCb.SelectedIndex + 1, exdesktop.Checked, loadedset.RestoreMouse));
                     AddLog(DateTime.Now, "Execution started.");
                 }
                 else
@@ -785,7 +760,7 @@ namespace Windows_Input_Simulator
             if (executer.Status == ExecuterSim.SimStatus.Idle)
             {
                 executer.LoadSet(coderLoadedSet);
-                executer.StartExecuting(true, true, true, !coderLoadedSet.IgnoreKeyStats, 1, exdesktop.Checked);
+                executer.StartExecuting(true, true, true, !coderLoadedSet.IgnoreKeyStats, coderLoadedSet.Multiplier, coderLoadedSet.ShowDesktop, coderLoadedSet.RestoreMouse);
             }
             else
                 MessageBox.Show(this, "Local executer is already running. There can be only one instance of the executer running at a time.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1);
@@ -809,13 +784,13 @@ namespace Windows_Input_Simulator
             if (extype == ExampleType.Explained)
             {
                 if (etype == EventType.Wheel)
-                    return "\n@(Timeline Point In Milliseconds)do{" + Enum.GetName(typeof(EventType), etype) + "}using<Mouse X,Mouse Y|Rotation Angle>end;";
+                    return "\n@(Delay In Milliseconds)do{" + Enum.GetName(typeof(EventType), etype) + "}using<Mouse X,Mouse Y|Rotation Angle>end;";
                 else if (etype == EventType.KeyDown || etype == EventType.KeyUp)
-                    return "\n@(Timeline Point In Milliseconds)do{" + Enum.GetName(typeof(EventType), etype) + "}using<KeyCode>end;";
+                    return "\n@(Delay In Milliseconds)do{" + Enum.GetName(typeof(EventType), etype) + "}using<KeyCode>end;";
                 else if(etype == EventType.ExecuteFile)
-                    return "\n@(Timeline Point In Milliseconds)do{" + Enum.GetName(typeof(EventType), etype) + "}using<FilePath>end;";
+                    return "\n@(Delay In Milliseconds)do{" + Enum.GetName(typeof(EventType), etype) + "}using<FilePath>end;";
                 else
-                    return "\n@(Timeline Point In Milliseconds)do{" + Enum.GetName(typeof(EventType), etype) + "}using<Mouse X,Mouse Y>end;";
+                    return "\n@(Delay In Milliseconds)do{" + Enum.GetName(typeof(EventType), etype) + "}using<Mouse X,Mouse Y>end;";
             }
             else
             {
@@ -953,6 +928,119 @@ namespace Windows_Input_Simulator
                 recorder.Resume();
                 AddLog(DateTime.Now, "Recorder resumed.");
             }
+        }
+    }
+
+    public class SOptions
+    {
+        private bool kb;
+        private bool mb;
+        private bool mm;
+        private bool spk;
+        private bool sdt;
+        private bool rms;
+        private int mp;
+
+        public bool KeyboardActive
+        {
+            get
+            {
+                return kb;
+            }
+
+            set
+            {
+                kb = value;
+            }
+        }
+
+        public bool MouseButtonsAactive
+        {
+            get
+            {
+                return mb;
+            }
+
+            set
+            {
+                mb = value;
+            }
+        }
+
+        public bool MouseMovementActive
+        {
+            get
+            {
+                return mm;
+            }
+
+            set
+            {
+                mm = value;
+            }
+        }
+
+        public bool RestoreSpecial
+        {
+            get
+            {
+                return spk;
+            }
+
+            set
+            {
+                spk = value;
+            }
+        }
+
+        public bool ShowDesktop
+        {
+            get
+            {
+                return sdt;
+            }
+
+            set
+            {
+                sdt = value;
+            }
+        }
+
+        public bool RestoreMousePos
+        {
+            get
+            {
+                return rms;
+            }
+
+            set
+            {
+                rms = value;
+            }
+        }
+
+        public int Multiplier
+        {
+            get
+            {
+                return mp;
+            }
+
+            set
+            {
+                mp = value;
+            }
+        }
+
+        public SOptions(bool kbevent, bool mbtnevent, bool mmevent, bool restorespec, int multiplier, bool showdt, bool restoremouse)
+        {
+            kb = kbevent;
+            mb = mbtnevent;
+            mm = mmevent;
+            spk = restorespec;
+            mp = multiplier;
+            sdt = showdt;
+            rms = restoremouse;
         }
     }
 }

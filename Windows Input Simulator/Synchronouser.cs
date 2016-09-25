@@ -13,8 +13,8 @@ namespace Simulator
         private bool running;
         private int pauseelapsed;
         // Events
-        public EventHandler Started;
-        public EventHandler Stopped;
+        public event EventHandler Started;
+        public event EventHandler Stopped;
         // Methods
         public void StartSync()
         {

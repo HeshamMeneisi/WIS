@@ -215,7 +215,7 @@
             this.tabControl1.HotTrack = true;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 2;
+            this.tabControl1.SelectedIndex = 0;
             this.tabControl1.SelectedTabFontStyle = System.Drawing.FontStyle.Underline;
             this.tabControl1.Size = new System.Drawing.Size(341, 423);
             this.tabControl1.TabIndex = 0;
@@ -828,7 +828,7 @@
             this.rsk.AutoSize = true;
             this.rsk.Checked = true;
             this.rsk.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.rsk.Location = new System.Drawing.Point(187, 43);
+            this.rsk.Location = new System.Drawing.Point(187, 42);
             this.rsk.Name = "rsk";
             this.rsk.Size = new System.Drawing.Size(120, 17);
             this.rsk.TabIndex = 5;
@@ -1647,115 +1647,115 @@
             // specialKeysNCSToolStripMenuItem
             // 
             this.specialKeysNCSToolStripMenuItem.Name = "specialKeysNCSToolStripMenuItem";
-            this.specialKeysNCSToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.specialKeysNCSToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.specialKeysNCSToolStripMenuItem.Text = "SpecialKeys(N,C,S)";
             // 
             // showDesktopToolStripMenuItem
             // 
             this.showDesktopToolStripMenuItem.Name = "showDesktopToolStripMenuItem";
-            this.showDesktopToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.showDesktopToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.showDesktopToolStripMenuItem.Text = "ShowDesktop()";
             // 
             // setMultipliernToolStripMenuItem
             // 
             this.setMultipliernToolStripMenuItem.Name = "setMultipliernToolStripMenuItem";
-            this.setMultipliernToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.setMultipliernToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.setMultipliernToolStripMenuItem.Text = "SetMultiplier(n);";
             // 
             // executeFileFilepathToolStripMenuItem
             // 
             this.executeFileFilepathToolStripMenuItem.Name = "executeFileFilepathToolStripMenuItem";
-            this.executeFileFilepathToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.executeFileFilepathToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.executeFileFilepathToolStripMenuItem.Text = "ExecuteFile";
             // 
             // keyDownToolStripMenuItem
             // 
             this.keyDownToolStripMenuItem.Name = "keyDownToolStripMenuItem";
-            this.keyDownToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.keyDownToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.keyDownToolStripMenuItem.Text = "KeyDown";
             // 
             // keyUpToolStripMenuItem
             // 
             this.keyUpToolStripMenuItem.Name = "keyUpToolStripMenuItem";
-            this.keyUpToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.keyUpToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.keyUpToolStripMenuItem.Text = "KeyUp";
             // 
             // mouseDownToolStripMenuItem
             // 
             this.mouseDownToolStripMenuItem.Name = "mouseDownToolStripMenuItem";
-            this.mouseDownToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.mouseDownToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.mouseDownToolStripMenuItem.Text = "LeftDown";
             // 
             // mToolStripMenuItem
             // 
             this.mToolStripMenuItem.Name = "mToolStripMenuItem";
-            this.mToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.mToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.mToolStripMenuItem.Text = "LeftUp";
             // 
             // rightClickDownToolStripMenuItem
             // 
             this.rightClickDownToolStripMenuItem.Name = "rightClickDownToolStripMenuItem";
-            this.rightClickDownToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.rightClickDownToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.rightClickDownToolStripMenuItem.Text = "RightDown";
             // 
             // rightClickUpToolStripMenuItem
             // 
             this.rightClickUpToolStripMenuItem.Name = "rightClickUpToolStripMenuItem";
-            this.rightClickUpToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.rightClickUpToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.rightClickUpToolStripMenuItem.Text = "RightUp";
             // 
             // middleClickDownToolStripMenuItem
             // 
             this.middleClickDownToolStripMenuItem.Name = "middleClickDownToolStripMenuItem";
-            this.middleClickDownToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.middleClickDownToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.middleClickDownToolStripMenuItem.Text = "MiddleDown";
             // 
             // middleClickUpToolStripMenuItem
             // 
             this.middleClickUpToolStripMenuItem.Name = "middleClickUpToolStripMenuItem";
-            this.middleClickUpToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.middleClickUpToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.middleClickUpToolStripMenuItem.Text = "MiddleUp";
             // 
             // xB1DownToolStripMenuItem
             // 
             this.xB1DownToolStripMenuItem.Name = "xB1DownToolStripMenuItem";
-            this.xB1DownToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.xB1DownToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.xB1DownToolStripMenuItem.Text = "XB1Down";
             // 
             // xB1UpToolStripMenuItem
             // 
             this.xB1UpToolStripMenuItem.Name = "xB1UpToolStripMenuItem";
-            this.xB1UpToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.xB1UpToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.xB1UpToolStripMenuItem.Text = "XB1Up";
             // 
             // xB2DownToolStripMenuItem
             // 
             this.xB2DownToolStripMenuItem.Name = "xB2DownToolStripMenuItem";
-            this.xB2DownToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.xB2DownToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.xB2DownToolStripMenuItem.Text = "XB2Down";
             // 
             // xB2UpToolStripMenuItem
             // 
             this.xB2UpToolStripMenuItem.Name = "xB2UpToolStripMenuItem";
-            this.xB2UpToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.xB2UpToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.xB2UpToolStripMenuItem.Text = "XB2Up";
             // 
             // wheelToolStripMenuItem
             // 
             this.wheelToolStripMenuItem.Name = "wheelToolStripMenuItem";
-            this.wheelToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.wheelToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.wheelToolStripMenuItem.Text = "Wheel";
             // 
             // doubleClickToolStripMenuItem
             // 
             this.doubleClickToolStripMenuItem.Name = "doubleClickToolStripMenuItem";
-            this.doubleClickToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.doubleClickToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.doubleClickToolStripMenuItem.Text = "DoubleClick";
             // 
             // mouseMoveToolStripMenuItem
             // 
             this.mouseMoveToolStripMenuItem.Name = "mouseMoveToolStripMenuItem";
-            this.mouseMoveToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.mouseMoveToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.mouseMoveToolStripMenuItem.Text = "MouseMove";
             // 
             // saveFileDialog1

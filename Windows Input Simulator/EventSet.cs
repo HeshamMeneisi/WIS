@@ -24,6 +24,8 @@ namespace Simulator
         int multiplier;
         int nexteve;
         bool endReached;
+        private bool rsmouse;
+
         //constructer
         public EventSet()
         {
@@ -144,6 +146,9 @@ namespace Simulator
             get { return multiplier; }
             set { multiplier = value; }
         }
+
+        public bool RestoreMouse { get { return rsmouse; } set { rsmouse = value; } }
+
         // Methods
         public void AddEvent(int time, EventType eve, object eveinfo)
         {
